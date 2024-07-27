@@ -39,6 +39,7 @@ Response body:
 {
 "id": 1
 }
+
 ---
 
 `GET` /file/1
@@ -54,6 +55,7 @@ Response body:
 "creation_date": "2024-07-27T15:19:10.239Z",
 "description": "description"
 }
+
 ---
 
 `GET` /files
