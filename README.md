@@ -64,6 +64,7 @@ Response body:
 
 200 OK
 
+Response body:
 {
 "count": 1,
 "files": [
