@@ -1,0 +1,41 @@
+spring:
+  application:
+    name: file-manager
+  liquibase:
+    enabled: false
+  datasource:
+    url: jdbc:postgresql://localhost:5432/file-manager
+    username: postgres
+    password: postgres
+    driver-class-name: org.postgresql.Driver
+  jpa:
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.PostgreSQLDialect
+        enable_lazy_load_no_trans: true
+
+bucket4j:
+  enabled: true
+  filters:
+    - cache-name: rate-limit-buckets-file-manager
+      url: /.*
+      http-response-body: "{ \"status\": 429, \"error\": \"Too Many Requests\", \"message\": \"You have exhausted your API Request Quota\" }"
+      rate-limits:
+          cache-key: "getRemoteAddr()"
+          bandwidths:
+            - capacity: 100
+              time: 1
+              unit: minutes
+              refill-speed: interval
+
+server:
+  port: 8080
+  forward-headers-strategy: NATIVE
+
+logging:
+  config: classpath:log4j2-plain.xml
+
+spring-doc:
+  swagger-ui:
+    path: /swagger-ui
+  default-produces-media-type: application/json
